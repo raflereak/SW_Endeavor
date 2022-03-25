@@ -2,6 +2,9 @@
 
 ## 개요
 이 repository는 선문대학교 AI소프트웨어학과 3학년 1학기 과정 'SW프로젝트 기초(PBL)'에서 발생한 프로젝트입니다.
+팀장 : 김태훈
+팀원 : 김성현, 김예린, 최동현, 히다카 쇼모토
+
 
 # 프로젝트 GameCoach
 ## 프로젝트 개요
@@ -24,11 +27,11 @@ pyQT5
 ***
 
 ### Input
-#### Mouse
+#### Mouse : 히다카 쇼모토
 
-#### Keyboard
+#### Keyboard : 최동현
 
-#### REC and Capture
+#### REC and Capture : 김예린
 
 ***
 
@@ -40,3 +43,5 @@ pyQT5
 #### Statics
 
 #### AI
+
+#### GUI
