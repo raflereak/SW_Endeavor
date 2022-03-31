@@ -1,5 +1,4 @@
 # SW_Endeavor
-hahaha
 
 ## 개요
 이 repository는 선문대학교 AI소프트웨어학과 3학년 1학기 과정 'SW프로젝트 기초(PBL)'에서 발생한 프로젝트입니다.
