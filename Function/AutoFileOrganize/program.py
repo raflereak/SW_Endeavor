@@ -8,6 +8,8 @@ import io
 sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding = 'utf-8') # 아스키 코드에서 유니코드 형식으로 변경
 sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding = 'utf-8')
 
+from tkinter import filedialog
+
 #파일명을 읽어와서 파일명의 분류 부분을 중복없이 리스트화
 def fileList(path_before : str)->list :
     file_list = os.listdir(path_before) #폴더의 파일명을 리스트화
