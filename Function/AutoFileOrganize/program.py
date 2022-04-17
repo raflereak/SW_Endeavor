@@ -1,14 +1,16 @@
 #folder_move
-from PyQt5 import QtCore,QtGui,QtWidgets
+
 import os #파일명, 폴더명 정보를 읽어오기 위한 모듈
 import shutil #파일 이동을 위한 모듈
 
 import sys
 import io
-sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding = 'utf-8') # 아스키 코드에서 유니코드 형식으로 변경
+sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding = 'utf-8')#한글화
 sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding = 'utf-8')
 
 from tkinter import filedialog
+
+
 
 #파일명을 읽어와서 파일명의 분류 부분을 중복없이 리스트화
 def fileList(path_before : str)->list :
@@ -53,12 +55,14 @@ def moveFile(path_before, path_after):
     
 
 
-if __name__ == "__main__" :
+def process():
     #분류할 파일이 있는 위치 폴더
     path_before = r"C:\Users\CDH\Desktop\3학년 수강\SW프로젝트기초\테스트 폴더"
     file_list = fileList(path_before)
 
     #옮길 경로 폴더
-    path_after = r""+filedialog.askdirectory() #옮길 위치 직접 지정
+    path_after = r""+filedialog.askdirectory()
     makeFolder(path_after, file_list)
     moveFile(path_before, path_after)
+
+process()
