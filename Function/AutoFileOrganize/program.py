@@ -50,15 +50,11 @@ def moveFile(path_before, path_after):
     for key, value in dict.items():
         shutil.move(path_before+"/"+key, path_after+"/"+value)
     
-    
-
-
-if __name__ == "__main__" :
-    #분류할 파일이 있는 위치 폴더
-    path_before = r"C:\Users\CDH\Desktop\3학년 수강\SW프로젝트기초\테스트 폴더"
+def process(_path, _targetPath):
+    path_before = r""+_path
     file_list = fileList(path_before)
 
     #옮길 경로 폴더
-    path_after = r""+filedialog.askdirectory() #옮길 위치 직접 지정
+    path_after = r""+_targetPath #옮길 위치 직접 지정
     makeFolder(path_after, file_list)
     moveFile(path_before, path_after)
