@@ -20,7 +20,7 @@ def fileList(path_before : str)->list :
 
     temp_set = set(category) #중복을 제거하기 위해 set 사용
     result = list(temp_set) #중복 제거 후 다시 리스트화
-    print(result)
+    #print(result)
     return result #결과 리턴
 
 
@@ -44,21 +44,21 @@ def moveFile(path_before, path_after):
         temp_list = file.split(".")
         dict[file]=temp_list[-1]
      
-    print(dict)
+    #print(dict)
     
     #딕셔너리 정보 활용하여 파일 이동
+    cnt = 0
     for key, value in dict.items():
         shutil.move(path_before+"/"+key, path_after+"/"+value)
+        cnt +=1
+    return cnt
     
-    
-
-
-if __name__ == "__main__" :
-    #분류할 파일이 있는 위치 폴더
-    path_before = r"C:\Users\CDH\Desktop\3학년 수강\SW프로젝트기초\테스트 폴더"
+def process(_path, _targetPath):
+    path_before = r""+_path
     file_list = fileList(path_before)
 
     #옮길 경로 폴더
-    path_after = r""+filedialog.askdirectory() #옮길 위치 직접 지정
+    path_after = r""+_targetPath #옮길 위치 직접 지정
     makeFolder(path_after, file_list)
-    moveFile(path_before, path_after)
+    cnt = moveFile(path_before, path_after)
+    return _path, _targetPath, cnt, file_list
