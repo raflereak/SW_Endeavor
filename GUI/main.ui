@@ -235,7 +235,7 @@
       <widget class="QLineEdit" name="targetFolderPath"/>
      </item>
      <item>
-      <widget class="QToolButton" name="targetFloderTool">
+      <widget class="QToolButton" name="targetFolderTool">
        <property name="text">
         <string>...</string>
        </property>
