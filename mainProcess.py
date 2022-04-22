@@ -9,8 +9,8 @@ import Function.VersionManager.versionManager as verManage
 import Function.Log as Log
 # UI파일 연결
 # UI파일 위치를 잘 적어 넣어준다.
-form_class = uic.loadUiType("main.ui")[0]
-form_class1 = uic.loadUiType("LogWindow.ui")[0]
+form_class = uic.loadUiType("GUI/main.ui")[0]
+form_class1 = uic.loadUiType("GUI/LogWindow.ui")[0]
 
 # 프로그램 메인을 담당하는 Class 선언
 class MainClass(QMainWindow, form_class):
@@ -47,8 +47,9 @@ class MainClass(QMainWindow, form_class):
             Log.organizeLog(organize.process(self.targetOrganizePath.text(), self.targetFolderPath.text()))
         
     def verMake(self):
-        verManage.makeVersionFile(self.lineSelectFilePath.text(), self.buttonSelectFile.text())
-        self.refreshItemList()
+        if(self.lineSelectFilePath.text() != "" and self.buttonSelectFile.text() != ""):
+            verManage.makeVersionFile(self.lineSelectFilePath.text(), self.buttonSelectFile.text())
+            self.refreshItemList()
 
     def initUI(self):
         self.setupUi(self)
@@ -81,7 +82,8 @@ class MainClass(QMainWindow, form_class):
             
 
     def changeVer(self):
-        verManage.changeHiddenFile(self.lineSelectFilePath.text(), self.buttonSelectFile.text(), self.listVersionFile.currentRow())
+        if(self.lineSelectFilePath.text() != "" and self.buttonSelectFile.text() != ""):
+            verManage.changeHiddenFile(self.lineSelectFilePath.text(), self.buttonSelectFile.text(), self.listVersionFile.currentRow())
 
     def openLogWindow(self):
         self.window1 = LogWindow()
