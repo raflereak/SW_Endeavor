@@ -21,10 +21,10 @@ class MainClass(QMainWindow, form_class):
         # 화면을 보여준다.
         self.show()
 
-    def getFloder(self):
+    def getFolder(self):
         fname = QFileDialog.getOpenFileName(self, 'Open Folder', 'C:\\', "All files (*)")
         
-    def getOrganizeFloder(self):
+    def getOrganizeFolder(self):
         fileName = QFileDialog.getExistingDirectory(
                        #QtWidgets.QFileDialog,                  # ???
                        None,
@@ -33,7 +33,7 @@ class MainClass(QMainWindow, form_class):
                        QFileDialog.ShowDirsOnly)
         self.targetOrganizePath.setText(fileName)
 
-    def getTargetFloder(self):
+    def getTargetFolder(self):
         fileName = QFileDialog.getExistingDirectory(
                        #QtWidgets.QFileDialog,                  # ???
                        None,
@@ -43,7 +43,8 @@ class MainClass(QMainWindow, form_class):
         self.targetFolderPath.setText(fileName)
 
     def processOrganize(self):
-        Log.organizeLog(organize.process(self.targetOrganizePath.text(), self.targetFolderPath.text()))
+        if (self.targetOrganziePath.text() != "" and self.targetFolderPath.text() != ""):
+            Log.organizeLog(organize.process(self.targetOrganizePath.text(), self.targetFolderPath.text()))
         
     def verMake(self):
         verManage.makeVersionFile(self.lineSelectFilePath.text(), self.buttonSelectFile.text())
@@ -52,8 +53,8 @@ class MainClass(QMainWindow, form_class):
     def initUI(self):
         self.setupUi(self)
         self.buttonOrganize.clicked.connect(self.processOrganize)
-        self.targetOrganizeTool.clicked.connect(self.getOrganizeFloder)
-        self.targetFloderTool.clicked.connect(self.getTargetFloder)
+        self.targetOrganizeTool.clicked.connect(self.getOrganizeFolder)
+        self.targetFolderTool.clicked.connect(self.getTargetFolder)
         self.buttonSelectFile.clicked.connect(self.getTargetVerFile)
         self.buttonVersion.clicked.connect(self.verMake)
         self.buttonChangeVersion.clicked.connect(self.changeVer)
@@ -67,9 +68,10 @@ class MainClass(QMainWindow, form_class):
             filter='',
             initialFilter=''
         )
-        self.buttonSelectFile.setText(os.path.basename(fileName[0]))
-        self.lineSelectFilePath.setText(os.path.dirname(fileName[0]))
-        self.refreshItemList()
+        if(os.path.basename(fileName[0]) != "" and os.path.dirname(fileName[0]) != ""):
+            self.buttonSelectFile.setText(os.path.basename(fileName[0]))
+            self.lineSelectFilePath.setText(os.path.dirname(fileName[0]))
+            self.refreshItemList()
     
     def refreshItemList(self):
         self.listVersionFile.clear()
