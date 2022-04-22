@@ -14,6 +14,7 @@ dictConfig({
             'class': 'logging.FileHandler',
             'filename': 'debug.log',
             'formatter': 'default',
+            'encoding' : 'utf-8',
         },
     },
     'root': {
