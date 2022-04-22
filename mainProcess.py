@@ -43,7 +43,7 @@ class MainClass(QMainWindow, form_class):
         self.targetFolderPath.setText(fileName)
 
     def processOrganize(self):
-        if (self.targetOrganziePath.text() != "" and self.targetFolderPath.text() != ""):
+        if (self.targetOrganizePath.text() != "" and self.targetFolderPath.text() != ""):
             Log.organizeLog(organize.process(self.targetOrganizePath.text(), self.targetFolderPath.text()))
         
     def verMake(self):
