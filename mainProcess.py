@@ -80,12 +80,9 @@ class MainClass(QMainWindow, form_class):
         
     def verMake(self):
         if(self.lineSelectFilePath.text() != "" and self.buttonSelectFile.text() != ""):
-            verManage.makeVersionFile(self.lineSelectFilePath.text(), self.buttonSelectFile.text())
-            self.refreshItemList()
-
-    def verMakeLog(self):                   # 버전 생성 로그
-        if(self.lineSelectFilePath.text() != "" and self.buttonSelectFile.text() != ""):
             Log.verLog(verManage.makeVersionFile(self.lineSelectFilePath.text(), self.buttonSelectFile.text()))
+            # verManage.makeVersionFile(self.lineSelectFilePath.text(), self.buttonSelectFile.text())
+            self.refreshItemList()
 
     def initUI(self):
         self.setupUi(self)
@@ -138,11 +135,9 @@ class MainClass(QMainWindow, form_class):
     def changeVer(self):
         if(self.lineSelectFilePath.text() != "" and self.buttonSelectFile.text() != ""):
             verManage.changeHiddenFile(self.lineSelectFilePath.text(), self.buttonSelectFile.text(), self.listVersionFile.currentRow())
-
-    def changeVerLog(self):                         # chage Version Log 생성
-        if(self.lineSelectFilePath.text() != "" and self.buttonSelectFile.text() != ""):
+            # change Version Log 생성
             Log.verChangeLog(verManage.changeHiddenFile(self.lineSelectFilePath.text(), self.buttonSelectFile.text(), self.listVersionFile.currentRow()))
-    
+
     def openLogWindow(self):
         self.window1 = LogWindow()
 
