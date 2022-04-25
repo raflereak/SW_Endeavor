@@ -26,4 +26,10 @@ def myfunc():
     logging.debug("함수가 시작되었습니다.")
 
 def organizeLog(turple): # beforePath, afterPath, howMany, fileList
-    logging.debug(turple[0] + "에서 " + turple[1] + "(으)로 " + str(turple[2]) + "개 의 파일이 " + str(turple[3]) + "종류별로 정리 되었습니다.")
+    logging.debug("[파일 정렬 기능]을 사용하여 " + turple[0] + "에서 " + turple[1] + "(으)로 " + str(turple[2]) + "개의 파일이 " + str(turple[3]) + "종류별로 정리 되었습니다.")
+
+def verLog(turple): # filePath, fileName, file version
+    logging.debug("[버전 생성 기능]을 사용하여 " + turple[0] + "의 [" + turple[1] + "]이(가) [버전 " + str(turple[2]) + "] 파일이 생성되었습니다.")
+
+def verChangeLog(turple): # filePath, fileName, targetVer
+    logging.debug("[버전 바꾸기 기능]을  사용하여" + turple[0] + "의 [" + turple[1] + "]이(가) [버전 " + str(turple[2]) + "] (으)로 변경되었습니다.")
