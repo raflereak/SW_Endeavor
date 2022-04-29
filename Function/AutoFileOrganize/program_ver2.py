@@ -34,12 +34,11 @@ def makeFolder(path_after : str, file_list : list):
             pass
 
 #파일을 폴더 분류에 맞게 이동
-def moveFile(path_before, path_after):
+def moveFile(path_before, path_after, selectNumber):
     folderlist = os.listdir(path_after)
     filelist = os.listdir(path_before)
     dict = {}
-    selectNumber = 0 #분기점 1은 숏컷을 정리할 폴더에 생성, 0는 파일을 정리할 폴더에 이동
-
+    
     #파일명에 대한 폴더명을 딕셔너리로 저장
      
     for file in filelist:
@@ -68,12 +67,12 @@ def moveFile(path_before, path_after):
         cnt +=1
     return cnt
     
-def process(_path, _targetPath):
+def process(_path, _targetPath, selectNumber):
     path_before = r""+_path
     file_list = fileList(path_before)
 
     #옮길 경로 폴더
     path_after = r""+_targetPath #옮길 위치 직접 지정
-    makeFolder(path_after, file_list)
+    makeFolder(path_after, file_list, selectNumber)
     cnt = moveFile(path_before, path_after)
     return _path, _targetPath, cnt, file_list
