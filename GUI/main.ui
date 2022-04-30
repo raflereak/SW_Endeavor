@@ -19,7 +19,7 @@
      <rect>
       <x>0</x>
       <y>210</y>
-      <width>311</width>
+      <width>342</width>
       <height>391</height>
      </rect>
     </property>
@@ -269,6 +269,32 @@
      <string>Add</string>
     </property>
    </widget>
+   <widget class="QRadioButton" name="radioShortCut">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>130</y>
+      <width>100</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ShortCut</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="radio_move">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>130</y>
+      <width>100</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Move</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -276,7 +302,7 @@
      <x>0</x>
      <y>0</y>
      <width>480</width>
-     <height>21</height>
+     <height>43</height>
     </rect>
    </property>
   </widget>
