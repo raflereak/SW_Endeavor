@@ -27,6 +27,24 @@ class manageData: # 최초로 불러 올 때 모든 데이터를 받아옵니다
         self.tabSize = forInput_List[5]
         self.tab = forInput_List[6]
         self.tabList = self.tab.split(",")
+
+    def get_data(self):
+        return [self.organize_Path, self.targetFolder_Path, self.shortCut, self.file, self.file_Path, self.tabSize, self.tab, self.tabList]
+
+    def set_data(self, forInput_List):
+        # for Orgazie
+        self.organize_Path = forInput_List[0]
+        self.targetFolder_Path = forInput_List[1]
+        self.shortCut = forInput_List[2]
+        
+        # Version
+        self.file = forInput_List[3]
+        self.file_Path = forInput_List[4]
+        
+        # Order by List
+        self.tabSize = forInput_List[5]
+        self.tab = forInput_List[6]
+        self.tabList = self.tab.split(",")
         
 
     def save_Data(self): # 프로그램이 끝나기 전이나 함수가 실행 된 이후 저장하는 식으로 진행됩니다.
