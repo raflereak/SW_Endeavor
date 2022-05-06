@@ -31,7 +31,7 @@ def makeFolder(path_after : str, file_list : list):
             pass
 
 #파일을 폴더 분류에 맞게 이동
-def moveFile(path_before, path_after, selectNumber, hide):
+def moveFile(path_before, path_after, selectNumber, _hide):
     folderlist = os.listdir(path_after)
     filelist = os.listdir(path_before)
     dict = {}
@@ -63,7 +63,7 @@ def moveFile(path_before, path_after, selectNumber, hide):
             shortcut.save()
             print(target)
 
-            if (hide == True):
+            if (_hide == True):
                 win32file.SetFileAttributes(os.path.join(target), 2)
             else:
                 win32file.SetFileAttributes(os.path.join(target), 1)
@@ -77,14 +77,14 @@ def moveFile(path_before, path_after, selectNumber, hide):
         cnt +=1
     return cnt
     
-def process(_path, _targetPath, selectNumber):
+def process(_path, _targetPath, selectNumber, _hide):
     path_before = r""+_path
     file_list = fileList(path_before)
-    hide = True #위에서 선택할 수 있도록 할 필요가 있음.
+    #위에서 선택할 수 있도록 할 필요가 있음.
     #숏컷을 만든 후 원본파일을 숨길지 방치할지 선택
     
     #옮길 경로 폴더
     path_after = r""+_targetPath #옮길 위치 직접 지정
     makeFolder(path_after, file_list)
-    cnt = moveFile(path_before, path_after, selectNumber, hide)
+    cnt = moveFile(path_before, path_after, selectNumber, _hide)
     return _path, _targetPath, cnt, file_list
