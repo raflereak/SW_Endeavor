@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>480</width>
-    <height>640</height>
+    <width>511</width>
+    <height>675</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -91,7 +91,7 @@
    <widget class="QWidget" name="verticalLayoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>320</x>
+      <x>340</x>
       <y>0</y>
       <width>160</width>
       <height>601</height>
@@ -139,14 +139,24 @@
         <widget class="QListWidget" name="listVersionFile"/>
        </item>
        <item>
-        <widget class="QLabel" name="label_4">
+        <widget class="QPushButton" name="buttonMakePackage">
          <property name="text">
-          <string>File Info</string>
+          <string>Make Package</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QTextEdit" name="textEdit"/>
+        <widget class="QLineEdit" name="PackageName"/>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>Package</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QListWidget" name="listPackage"/>
        </item>
       </layout>
      </item>
@@ -161,6 +171,13 @@
       <widget class="QPushButton" name="buttonLog">
        <property name="text">
         <string>Log</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="buttonSetting">
+       <property name="text">
+        <string>Setting</string>
        </property>
       </widget>
      </item>
@@ -259,7 +276,7 @@
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>270</x>
+      <x>290</x>
       <y>190</y>
       <width>41</width>
       <height>23</height>
@@ -301,7 +318,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>480</width>
+     <width>511</width>
      <height>43</height>
     </rect>
    </property>

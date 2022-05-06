@@ -4,7 +4,10 @@ class manageData: # 최초로 불러 올 때 모든 데이터를 받아옵니다
         self.targetFile_Path = _target_Path
         forRead = open(self.targetFile_Path, 'r')
         if (forRead.read() == ""):
-            forInput_List = ["", "", "False", "", "", 1, ""]
+            forInput_List = ["", "", "False", "", "", "", 1, ""]
+        elif (forRead.read() == None):
+            forRead = open(self.targetFile_Path, 'w')
+            forInput_List = ["", "", "False", "", "", "", 1, ""]
         else :
             forRead = open(self.targetFile_Path, 'r')
             temp = forRead.readlines()
@@ -22,14 +25,17 @@ class manageData: # 최초로 불러 올 때 모든 데이터를 받아옵니다
         # Version
         self.file = forInput_List[3]
         self.file_Path = forInput_List[4]
+
+        # Package
+        self.package_Path = forInput_List[5]
         
         # Order by List
-        self.tabSize = forInput_List[5]
-        self.tab = forInput_List[6]
+        self.tabSize = forInput_List[6]
+        self.tab = forInput_List[7]
         self.tabList = self.tab.split(",")
 
     def get_data(self):
-        return [self.organize_Path, self.targetFolder_Path, self.shortCut, self.file, self.file_Path, self.tabSize, self.tab, self.tabList]
+        return [self.organize_Path, self.targetFolder_Path, self.shortCut, self.file, self.file_Path, self.package_Path, self.tabSize, self.tab, self.tabList]
 
     def set_data(self, forInput_List):
         # for Orgazie
@@ -40,10 +46,13 @@ class manageData: # 최초로 불러 올 때 모든 데이터를 받아옵니다
         # Version
         self.file = forInput_List[3]
         self.file_Path = forInput_List[4]
+
+        # Package
+        self.package_Path = forInput_List[5]
         
         # Order by List
-        self.tabSize = forInput_List[5]
-        self.tab = forInput_List[6]
+        self.tabSize = forInput_List[6]
+        self.tab = forInput_List[7]
         self.tabList = self.tab.split(",")
         
 
@@ -57,6 +66,9 @@ class manageData: # 최초로 불러 올 때 모든 데이터를 받아옵니다
         saveData.write("# Version\n")
         saveData.write("file=" + self.file + "\n")
         saveData.write("file_Path=" + self.file_Path + "\n")
+        saveData.write("\n")
+        saveData.write("# Package\n")
+        saveData.write("base_Path=" + self.package_Path + "\n")
         saveData.write("\n")
         saveData.write("# Order by List\n")
         saveData.write("tabSize=" + str(self.tabSize) + "\n")
