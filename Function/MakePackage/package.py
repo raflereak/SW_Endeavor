@@ -28,4 +28,4 @@ class package: # 클래스를 생성해야합니다. 매개변수는 패키지 �
         shutil.copytree(os.path.join(self.pathPackage, self.fileList[_what]), os.path.join(_path_target, "package_" + self.fileList[_what]))
     
     def copyAndPaste_File(self, _what, _path_target, _name): # 패키지 폴더를 저장한 곳에서 몇번째 파일인지 지정하고, 어디로 옮길 것인지 지정하여 실행합니다.
-        shutil.copytree(os.path.join(self.pathPackage, self.fileList[_what]), os.path.join(_path_target, _name + "package_" + self.fileList[_what]))
+        shutil.copytree(os.path.join(self.pathPackage, self.fileList[_what]), os.path.join(_path_target, _name))
