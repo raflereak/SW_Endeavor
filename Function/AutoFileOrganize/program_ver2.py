@@ -2,6 +2,7 @@
 import os #파일명, 폴더명 정보를 읽어오기 위한 모듈
 import shutil #파일 이동을 위한 모듈
 import win32com.client
+import win32file
 import sys, io
 sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding = 'utf-8') # 아스키 코드에서 유니코드 형식으로 변경
 sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding = 'utf-8')
@@ -30,7 +31,7 @@ def makeFolder(path_after : str, file_list : list):
             pass
 
 #파일을 폴더 분류에 맞게 이동
-def moveFile(path_before, path_after, selectNumber):
+def moveFile(path_before, path_after, selectNumber, hide):
     folderlist = os.listdir(path_after)
     filelist = os.listdir(path_before)
     dict = {}
@@ -52,7 +53,7 @@ def moveFile(path_before, path_after, selectNumber):
                 dict[file]=temp_list[-1]
             
             path = os.path.join(path_after, temp_list[-1], (file+'.lnk'))
-            target = dirAdrs +"\\"+ file
+            target = dirAdrs +"\\"+ file #파일의 정상 위치
             #주소+이름+확장자까지 작성하여 바로가기를 만들 파일을 지정
             icon = target   #사용할 아이콘을 위 경로의 파일과 같은 아이콘으로 지정. 따로 지정하고 싶을 경우 위와같이 주소를 지정해주면 됨
             shell = win32com.client.Dispatch("WScript.Shell")
@@ -61,6 +62,12 @@ def moveFile(path_before, path_after, selectNumber):
             shortcut.IconLocation = icon
             shortcut.save()
             print(target)
+
+            if (hide == True):
+                win32file.SetFileAttributes(os.path.join(target), 2)
+            else:
+                win32file.SetFileAttributes(os.path.join(target), 1)
+
         elif(selectNumber == False):
             dict[file]=temp_list[-1]
     #딕셔너리 정보 활용하여 파일 이동
@@ -73,9 +80,11 @@ def moveFile(path_before, path_after, selectNumber):
 def process(_path, _targetPath, selectNumber):
     path_before = r""+_path
     file_list = fileList(path_before)
-
+    hide = True #위에서 선택할 수 있도록 할 필요가 있음.
+    #숏컷을 만든 후 원본파일을 숨길지 방치할지 선택
+    
     #옮길 경로 폴더
     path_after = r""+_targetPath #옮길 위치 직접 지정
     makeFolder(path_after, file_list)
-    cnt = moveFile(path_before, path_after, selectNumber)
+    cnt = moveFile(path_before, path_after, selectNumber, hide)
     return _path, _targetPath, cnt, file_list
