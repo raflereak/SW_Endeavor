@@ -9,8 +9,9 @@ import Function.VersionManager.versionManager as verManage
 import Function.Log as Log
 # UI파일 연결
 # UI파일 위치를 잘 적어 넣어준다.
-form_class = uic.loadUiType("C:\\Users\\CDH\\Desktop\\SW_Endeavor\\GUI\\main.ui")[0]
-form_class1 = uic.loadUiType("C:\\Users\\CDH\\Desktop\\SW_Endeavor\\GUI\\LogWindow.ui")[0]
+
+form_class = uic.loadUiType("GUI\\main.ui")[0]
+form_class1 = uic.loadUiType("GUI\\LogWindow.ui")[0]
 
 # 프로그램 메인을 담당하는 Class 선언
 class MainClass(QMainWindow, form_class):
