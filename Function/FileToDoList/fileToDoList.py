@@ -1,20 +1,13 @@
-from O365 import Account, MSGraphProtocol
+from O365 import Account, calendar
+import datetime as dt
 
+credentials = ('eaff6f02-e564-47be-b88a-9e4088cb010f', 'Fyd8Q~N~ROFaUxYUFaFyG7z_S-Bt2_WPMDt7ra9N')
+# Fyd8Q~N~ROFaUxYUFaFyG7z_S-Bt2_WPMDt7ra9N
+# the default protocol will be Microsoft Graph
 
-Client_ID = "raflereak@outlook.kr"
-Client_PW = ""
-
-credentials = (Client_ID, Client_PW)
-
-protocol = MSGraphProtocol() 
-#protocol = MSGraphProtocol(defualt_resource='<sharedcalendar@domain.com>') 
-scopes = ['Calendars.Read.Shared']
-account = Account(credentials, protocol=protocol)
-
-if account.authenticate(scopes=scopes):
+account = Account(credentials)
+if account.authenticate(scopes=['basic', 'Calendars.ReadWrite']):
    print('Authenticated!')
-
-
 
 
 schedule = account.schedule()
@@ -24,7 +17,7 @@ events = calendar.get_events(include_recurring=False)
 
 for event in events:
     print(event)
-
+'''
 
 q = calendar.new_query('start').greater_equal(dt.datetime(2019, 11, 20))
 q.chain('and').on_attribute('end').less_equal(dt.datetime(2019, 11, 24))
@@ -36,9 +29,10 @@ def parse_event_string(event):
     end_index = event_string.find('to:') - 1 
     start_meeting_time = event_string[start_index:end_index]
 
-    start_obj = datetime.datetime.strptime(start_meeting_time, '%H:%M:%S')
-    now = datetime.datetime.strptime(now, '%H:%M:%S')
+    start_obj = dt.datetime.strptime(start_meeting_time, '%H:%M:%S')
+    now = dt.datetime.strptime(now, '%H:%M:%S')
 
     time_diff_min = ((start_obj - now).total_seconds())/60
 
     return time_diff_min
+    '''
