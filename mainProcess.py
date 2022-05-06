@@ -4,13 +4,13 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QDialog, QFileDialog, QAb
 from PyQt5.QtGui import QStandardItemModel
 from PyQt5.QtGui import QStandardItem
 
-import Function.AutoFileOrganize.program as organize
+import Function.AutoFileOrganize.program_ver2 as organize
 import Function.VersionManager.versionManager as verManage
 import Function.Log as Log
 # UI파일 연결
 # UI파일 위치를 잘 적어 넣어준다.
-form_class = uic.loadUiType("GUI/main.ui")[0]
-form_class1 = uic.loadUiType("GUI/LogWindow.ui")[0]
+form_class = uic.loadUiType("GUI\\main.ui")[0]
+form_class1 = uic.loadUiType("GUI\\LogWindow.ui")[0]
 
 # 프로그램 메인을 담당하는 Class 선언
 class MainClass(QMainWindow, form_class):
@@ -44,7 +44,7 @@ class MainClass(QMainWindow, form_class):
 
     def processOrganize(self):
         if (self.targetOrganizePath.text() != "" and self.targetFolderPath.text() != ""):
-            Log.organizeLog(organize.process(self.targetOrganizePath.text(), self.targetFolderPath.text()))
+            Log.organizeLog(organize.process(self.targetOrganizePath.text(), self.targetFolderPath.text(), self.radioShortCut.isChecked()))
         
     def verMake(self):
         if(self.lineSelectFilePath.text() != "" and self.buttonSelectFile.text() != ""):
