@@ -7,6 +7,8 @@ from PyQt5.QtGui import QStandardItem
 import Function.AutoFileOrganize.program_ver2 as organize
 import Function.VersionManager.versionManager as verManage
 import Function.Log as Log
+import Function.forManageData as md
+
 # UI파일 연결
 # UI파일 위치를 잘 적어 넣어준다.
 form_class = uic.loadUiType("GUI\\main.ui")[0]
@@ -20,6 +22,30 @@ class MainClass(QMainWindow, form_class):
         self.initUI()
         # 화면을 보여준다.
         self.show()
+        self.loadData = md.manageData("option.txt")
+        self.refreshData()
+        self.loadlist = self.loadData.get_data()
+
+    def getAddData(self):
+        # for Orgazie
+        self.loadlist[0] = self.targetOrganizePath.text()
+        self.loadlist[1] = self.targetFolderPath.text()
+        # self.loadlist[2] = self.
+        
+        # Version
+        self.loadlist[3] = self.buttonSelectFile.text()
+        self.loadlist[4] = self.targetFolderPath.text()
+        
+        # Order by List
+        # self.loadlist[5] = forInput_List[5]
+        # self.loadlist[6] = forInput_List[6]
+        # self.loadlist[7] = self.tab.split(",")
+
+    def refreshData(self):
+        self.targetOrganizePath.setText(self.loadData.organize_Path)
+        self.targetFolderPath.setText(self.loadData.targetFolder_Path)
+        #self.buttonSelectFile.setText(self.loadData.file)
+        #self.lineSelectFilePath.setText(self.loadData.file_Path)
 
     def getFolder(self):
         fname = QFileDialog.getOpenFileName(self, 'Open Folder', 'C:\\', "All files (*)")
@@ -29,7 +55,7 @@ class MainClass(QMainWindow, form_class):
                        #QtWidgets.QFileDialog,                  # ???
                        None,
                        "Open Directory",
-                       os.getcwd(), 
+                       self.targetOrganizePath.text(), 
                        QFileDialog.ShowDirsOnly)
         self.targetOrganizePath.setText(fileName)
 
@@ -38,7 +64,7 @@ class MainClass(QMainWindow, form_class):
                        #QtWidgets.QFileDialog,                  # ???
                        None,
                        "Open Directory",
-                       os.getcwd(), 
+                       self.targetFolderPath.text(), 
                        QFileDialog.ShowDirsOnly)
         self.targetFolderPath.setText(fileName)
 
@@ -105,3 +131,6 @@ if __name__ == "__main__" :
     app = QApplication(sys.argv) 
     window = MainClass() 
     app.exec_()
+    window.getAddData()
+    window.loadData.set_data(window.loadlist)
+    window.loadData.save_Data()
