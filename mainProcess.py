@@ -127,11 +127,13 @@ class MainClass(QMainWindow, form_class):
                        os.getcwd(), 
                        QFileDialog.ShowDirsOnly)
         if(self.PackageName.text() == ""):
-            # self.packageClass.copyAndPaste_File_noneName(self.listVersionFile.currentRow(), where)
+            self.packageClass.copyAndPaste_File_noneName(self.listVersionFile.currentRow(), where)
+            # 패키지의 이름 없을 때, 패키지 Log 생성
             Log.copyAndPaste_File_noneName_Log(self.packageClass.copyAndPaste_File_noneName(self.listVersionFile.currentRow(), where))
         
         else: 
-            # self.packageClass.copyAndPaste_File(self.listVersionFile.currentRow(), where, self.PackageName.text())
+            self.packageClass.copyAndPaste_File(self.listVersionFile.currentRow(), where, self.PackageName.text())
+            # 패키지의 이름이 있을 때, 패키지 Log 생성
             Log.copyAndPaste_File_Log(self.packageClass.copyAndPaste_File(self.listVersionFile.currentRow(), where, self.PackageName.text()))
         
         self.packageClass.refreshList(self.listVersionFile.currentRow(), where, self.PackageName.text())
