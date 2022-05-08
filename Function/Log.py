@@ -5,7 +5,7 @@ dictConfig({
     'version': 1,
     'formatters': {
         'default': {
-            'format': '[%(asctime)s] %(message)s',
+            'format': '[%(asctime)s] %(module)s %(message)s',
         }
     },
     'handlers': {
