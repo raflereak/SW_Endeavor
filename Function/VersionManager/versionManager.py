@@ -44,4 +44,4 @@ def changeHiddenFile(_filePath, _fileName, _targetVer): # 해당 파일과 특�
     os.rename(os.path.join(_filePath, "temp.FM_Ver"), os.path.join(_filePath, os.path.join(_filePath, _fileName + ".FM_Ver" + str(_targetVer))))
     
     win32file.SetFileAttributes(os.path.join(_filePath, _fileName + ".FM_Ver" + str(_targetVer)), 2)
-    win32file.SetFileAttributes(os.path.join(_filePath, _fileName), 1)
+    win32file.SetFileAttributes(os.path.join(_filePath, _fileName), 2)

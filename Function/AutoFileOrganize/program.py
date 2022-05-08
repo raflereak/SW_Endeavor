@@ -8,7 +8,7 @@ import io
 sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding = 'utf-8') # 아스키 코드에서 유니코드 형식으로 변경
 sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding = 'utf-8')
 
-#from tkinter import filedialog   현재 안쓰임
+from tkinter import filedialog
 
 #파일명을 읽어와서 파일명의 분류 부분을 중복없이 리스트화
 def fileList(path_before : str)->list :
@@ -20,7 +20,7 @@ def fileList(path_before : str)->list :
 
     temp_set = set(category) #중복을 제거하기 위해 set 사용
     result = list(temp_set) #중복 제거 후 다시 리스트화
-    #print(result)
+    print(result)
     return result #결과 리턴
 
 
@@ -44,14 +44,11 @@ def moveFile(path_before, path_after):
         temp_list = file.split(".")
         dict[file]=temp_list[-1]
      
-    #print(dict)
+    print(dict)
     
     #딕셔너리 정보 활용하여 파일 이동
-    cnt = 0
     for key, value in dict.items():
         shutil.move(path_before+"/"+key, path_after+"/"+value)
-        cnt +=1
-    return cnt
     
 def process(_path, _targetPath):
     path_before = r""+_path
@@ -60,5 +57,4 @@ def process(_path, _targetPath):
     #옮길 경로 폴더
     path_after = r""+_targetPath #옮길 위치 직접 지정
     makeFolder(path_after, file_list)
-    cnt = moveFile(path_before, path_after)
-    return _path, _targetPath, cnt, file_list
+    moveFile(path_before, path_after)
