@@ -9,6 +9,7 @@ import Function.VersionManager.versionManager as verManage
 import Function.Log as Log
 import Function.forManageData as md
 import Function.MakePackage.package as package
+import subprocess
 
 # UI파일 연결
 # UI파일 위치를 잘 적어 넣어준다.
@@ -93,6 +94,7 @@ class MainClass(QMainWindow, form_class):
         self.buttonChangeVersion.clicked.connect(self.changeVer)
         self.buttonLog.clicked.connect(self.openLogWindow)
         self.buttonMakePackage.clicked.connect(self.makePackage)
+        # self.buttonOpenExplorer.clicked.connect(self.buttonOpenExplorer)
 
     def getTargetVerFile(self):
         fileName = QFileDialog.getOpenFileName(
@@ -125,11 +127,14 @@ class MainClass(QMainWindow, form_class):
                        "Open Directory",
                        os.getcwd(), 
                        QFileDialog.ShowDirsOnly)
-        if(self.PackageName.text() == ""):
-            self.packageClass.copyAndPaste_File_noneName(self.listVersionFile.currentRow(), where)
-        else: 
-            self.packageClass.copyAndPaste_File(self.listVersionFile.currentRow(), where, self.PackageName.text())
-        self.packageClass.refreshList()
+        if (self.PackageName.text() != "" and self.PackageName.text() != ""):
+            Log.organizeLog(organize.process(self.PackageName.text(), self.PackageName.text(), self.radioShortCut.isChecked()))
+        # if(self.PackageName.text() == ""):
+        #     self.packageClass.copyAndPaste_File_noneName(self.listVersionFile.currentRow(), where)
+        # else: 
+        #     self.packageClass.copyAndPaste_File(self.listVersionFile.currentRow(), where, self.PackageName.text())
+        # self.packageClass.refreshList()
+        
 
     def changeVer(self):
         if(self.lineSelectFilePath.text() != "" and self.buttonSelectFile.text() != ""):
@@ -137,6 +142,9 @@ class MainClass(QMainWindow, form_class):
 
     def openLogWindow(self):
         self.window1 = LogWindow()
+        
+    # def openExploere(self):
+    #     subprocess.Popen(r'explorer /select,"C:\path\of\folder\file"')
 
 
 class LogWindow(QMainWindow, form_class1):
