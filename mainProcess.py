@@ -102,7 +102,14 @@ class LogWindow(QMainWindow, form_class1):
         self.setupUi(self)
 
 
+def csvCreate():
+    try:
+        f = open("dataset.csv", "w")
+    except:
+        pass
+
 if __name__ == "__main__" :
     app = QApplication(sys.argv) 
     window = MainClass() 
     app.exec_()
+    csvCreate()
