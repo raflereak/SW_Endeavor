@@ -1,14 +1,14 @@
 # Organize
 organize_Path=
-targetFolder_Path=""
+targetFolder_Path=
 shortCut=False
 
 # Version
 file=File
-file_Path=""
+file_Path=
 
 # Package
-base_Path=""
+base_Path=
 
 # Order by List
 tabSize=
