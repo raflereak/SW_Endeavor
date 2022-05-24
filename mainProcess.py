@@ -41,6 +41,16 @@ class MainClass(QMainWindow, form_class):
                        os.getcwd(), 
                        QFileDialog.ShowDirsOnly)
         self.targetFolderPath.setText(fileName)
+        
+    def openExplore(self):
+        fileName = QFileDialog.getExistingDirectory(
+                       #QtWidgets.QFileDialog,                  # ???
+                       None,
+                       "Open Explore",
+                       os.getcwd(), 
+                       QFileDialog.ShowDirsOnly)
+        self.targetFolderPath.setText(fileName)   
+        
 
     def processOrganize(self):
         if (self.targetOrganizePath.text() != "" and self.targetFolderPath.text() != ""):
@@ -60,6 +70,7 @@ class MainClass(QMainWindow, form_class):
         self.buttonVersion.clicked.connect(self.verMake)
         self.buttonChangeVersion.clicked.connect(self.changeVer)
         self.buttonLog.clicked.connect(self.openLogWindow)
+        self.buttonOpenExplore.clicked.connect(self.openExplore)
 
     def getTargetVerFile(self):
         fileName = QFileDialog.getOpenFileName(
