@@ -103,6 +103,7 @@ class MainClass(QMainWindow, form_class):
         self.buttonLog.clicked.connect(self.openLogWindow)
         self.buttonMakePackage.clicked.connect(self.makePackage)
         self.buttonOpenExplorer.clicked.connect(self.OpenExplore)
+        self.buttonCancel.clicked.connect(self.Cancel)
 
     def getTargetVerFile(self):
         fileName = QFileDialog.getOpenFileName(
@@ -149,7 +150,9 @@ class MainClass(QMainWindow, form_class):
 
     def openLogWindow(self):
         self.window1 = LogWindow()
-
+        
+    def Cancel(self):
+        LogWindow().exit
 
 class LogWindow(QMainWindow, form_class1):
     def __init__(self) :
