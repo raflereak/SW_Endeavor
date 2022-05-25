@@ -102,7 +102,7 @@ class MainClass(QMainWindow, form_class):
         self.buttonChangeVersion.clicked.connect(self.changeVer)
         self.buttonLog.clicked.connect(self.openLogWindow)
         self.buttonMakePackage.clicked.connect(self.makePackage)
-        self.buttonOpenExplore.clicked.connect(self.OpenExplore)
+        self.buttonOpenExplorer.clicked.connect(self.OpenExplore)
 
     def getTargetVerFile(self):
         fileName = QFileDialog.getOpenFileName(

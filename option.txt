@@ -8,12 +8,8 @@ file=File
 file_Path=
 
 # Package
-<<<<<<< HEAD
-base_Path=c:\Users\user\OneDrive\デスクトップ\SW\SW_Endeavor\Package
-=======
-base_Path=
->>>>>>> 1cae4cc745acde88036ddb04e0b41e85e33e56a6
+base_Path=C:\Users\user\OneDrive\デスクトップ\SW\SW_Endeavor\Package
 
 # Order by List
 tabSize=
-tab= 2
+tab=
