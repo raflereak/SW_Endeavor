@@ -8,7 +8,11 @@ file=File
 file_Path=
 
 # Package
+<<<<<<< HEAD
 base_Path=c:\Users\user\OneDrive\デスクトップ\SW\SW_Endeavor\Package
+=======
+base_Path=
+>>>>>>> 1cae4cc745acde88036ddb04e0b41e85e33e56a6
 
 # Order by List
 tabSize=
