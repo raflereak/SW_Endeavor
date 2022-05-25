@@ -135,11 +135,13 @@ class MainClass(QMainWindow, form_class):
                        "Open Directory",
                        os.getcwd(), 
                        QFileDialog.ShowDirsOnly)
-        if(self.PackageName.text() == ""):
-            self.packageClass.copyAndPaste_File_noneName(self.listVersionFile.currentRow(), where)
-        else: 
-            self.packageClass.copyAndPaste_File(self.listVersionFile.currentRow(), where, self.PackageName.text())
-        self.packageClass.refreshList()
+        # if(self.PackageName.text() == ""):
+        #     self.packageClass.copyAndPaste_File_noneName(self.listVersionFile.currentRow(), where)
+        # else: 
+        #     self.packageClass.copyAndPaste_File(self.listVersionFile.currentRow(), where, self.PackageName.text())
+        # self.packageClass.refreshList()
+        if (self.PackageName.text() != "" and self.PackageName.text() != ""):
+            Log.organizeLog(organize.process(self.PackageName.text(), self.PackageName.text(), self.radioShortCut.isChecked()))
 
     def changeVer(self):
         if(self.lineSelectFilePath.text() != "" and self.buttonSelectFile.text() != ""):
