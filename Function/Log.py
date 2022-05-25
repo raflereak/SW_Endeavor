@@ -14,6 +14,7 @@ dictConfig({
             'class': 'logging.FileHandler',
             'filename': 'debug.log',
             'formatter': 'default',
+            'encoding' : 'utf-8',
         },
     },
     'root': {
@@ -25,4 +26,5 @@ dictConfig({
 def myfunc():
     logging.debug("함수가 시작되었습니다.")
 
-myfunc()
+def organizeLog(turple): # beforePath, afterPath, howMany, fileList
+    logging.debug(turple[0] + "에서 " + turple[1] + "(으)로 " + str(turple[2]) + "개 의 파일이 " + str(turple[3]) + "종류별로 정리 되었습니다.")

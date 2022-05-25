@@ -1,14 +1,10 @@
 #folder_move
-from PyQt5 import QtCore,QtGui,QtWidgets
 import os #파일명, 폴더명 정보를 읽어오기 위한 모듈
 import shutil #파일 이동을 위한 모듈
-
-import sys
-import io
+import win32com.client
+import sys, io
 sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding = 'utf-8') # 아스키 코드에서 유니코드 형식으로 변경
 sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding = 'utf-8')
-
-#from tkinter import filedialog   현재 안쓰임
 
 #파일명을 읽어와서 파일명의 분류 부분을 중복없이 리스트화
 def fileList(path_before : str)->list :
@@ -29,36 +25,57 @@ def makeFolder(path_after : str, file_list : list):
     #폴더가 이미 생성되어있다면 오류가 발생하므로 예외처리 진행
     for file in file_list:
         try:
-            os.makedirs(path_after+"/"+file)
+            os.makedirs(path_after+"\\"+file)
         except:
             pass
 
 #파일을 폴더 분류에 맞게 이동
-def moveFile(path_before, path_after):
+def moveFile(path_before, path_after, selectNumber):
     folderlist = os.listdir(path_after)
     filelist = os.listdir(path_before)
     dict = {}
+    
+    #아이콘 지정을 위한 디렉터리 주소 변환
+    dirAdrs = ""
+    for i in range(len(path_before)):
+        if(path_before[i] == "/"):
+            dirAdrs += "\\"
+        else:
+            dirAdrs += path_before[i]
 
     #파일명에 대한 폴더명을 딕셔너리로 저장
+    
     for file in filelist:
         temp_list = file.split(".")
-        dict[file]=temp_list[-1]
-     
-    #print(dict)
-    
+        if (selectNumber == True):
+            if(temp_list[-1] == 'lnk'):
+                dict[file]=temp_list[-1]
+            
+            path = os.path.join(path_after, temp_list[-1], (file+'.lnk'))
+            target = dirAdrs +"\\"+ file
+            #주소+이름+확장자까지 작성하여 바로가기를 만들 파일을 지정
+            icon = target   #사용할 아이콘을 위 경로의 파일과 같은 아이콘으로 지정. 따로 지정하고 싶을 경우 위와같이 주소를 지정해주면 됨
+            shell = win32com.client.Dispatch("WScript.Shell")
+            shortcut = shell.CreateShortCut(path)
+            shortcut.Targetpath = target
+            shortcut.IconLocation = icon
+            shortcut.save()
+            print(target)
+        elif(selectNumber == False):
+            dict[file]=temp_list[-1]
     #딕셔너리 정보 활용하여 파일 이동
     cnt = 0
     for key, value in dict.items():
-        shutil.move(path_before+"/"+key, path_after+"/"+value)
+        shutil.move(path_before+"\\"+key, path_after+"\\"+value)
         cnt +=1
     return cnt
     
-def process(_path, _targetPath):
+def process(_path, _targetPath, selectNumber):
     path_before = r""+_path
     file_list = fileList(path_before)
 
     #옮길 경로 폴더
     path_after = r""+_targetPath #옮길 위치 직접 지정
     makeFolder(path_after, file_list)
-    cnt = moveFile(path_before, path_after)
+    cnt = moveFile(path_before, path_after, selectNumber)
     return _path, _targetPath, cnt, file_list
