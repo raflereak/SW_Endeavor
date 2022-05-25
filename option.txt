@@ -8,7 +8,7 @@ file=File
 file_Path=
 
 # Package
-base_Path=e:\Nas Cloud\Develope\For VsCode\대학교\2022년 1학기\SW_Endeavor\Package
+base_Path=
 
 # Order by List
 tabSize=
