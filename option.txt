@@ -8,7 +8,7 @@ file=File
 file_Path=
 
 # Package
-base_Path=c:\Users\user\OneDrive\ãƒ‡ã‚¹ã‚¯ãƒˆãƒƒãƒ—\SW\SW_Endeavor\Package
+base_Path=e:\Nas Cloud\Develope\For VsCode\´ëÇÐ±³\2022³â 1ÇÐ±â\SW_Endeavor\Package
 
 # Order by List
 tabSize=
