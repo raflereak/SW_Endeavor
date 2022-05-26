@@ -1,4 +1,5 @@
 import sys, os
+import atexit
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QMainWindow, QDialog, QFileDialog, QAbstractItemView
 from PyQt5.QtGui import QStandardItemModel
@@ -152,8 +153,8 @@ class MainClass(QMainWindow, form_class):
         self.window1 = LogWindow()
         
     def Cancel(self):
-        LogWindow().exit
-
+        atexit.register(MainClass())
+        
 class LogWindow(QMainWindow, form_class1):
     def __init__(self) :
         QMainWindow.__init__(self)
