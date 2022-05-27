@@ -166,8 +166,3 @@ if __name__ == "__main__" :
     window.getAddData()
     window.loadData.set_data(window.loadlist)
     window.loadData.save_Data()
-<<<<<<< HEAD
-    
-=======
-
->>>>>>> origin/BetaVer
