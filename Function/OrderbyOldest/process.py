@@ -3,6 +3,8 @@ from datetime import datetime
 import pandas as pd
 import sys
 import io
+import traceback
+
 sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding = 'utf-8') # 아스키 코드에서 유니코드 형식으로 변경
 sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding = 'utf-8')
 
@@ -13,7 +15,7 @@ def orderByList(_data, _rootPath, _select): #_rootPath : 대상 경로 _select :
     return _data
 
 def makePath(_input):
-    return _input + ":\\"
+    return _input 
 
 def makeFileData(_loadPath):
     temp = []
