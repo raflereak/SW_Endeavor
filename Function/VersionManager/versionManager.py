@@ -38,6 +38,8 @@ def makeVersionFile(_filePath, _fileName): # 해당 파일의 버전 생성
         filepathforreturn = shutil.copy(os.path.join(_filePath, _fileName), os.path.join(_filePath, _fileName + ".FM_Ver" + str(cnt)))
         win32file.SetFileAttributes(filepathforreturn, 2)
 
+        return _filePath, _fileName, cnt
+
 def changeHiddenFile(_filePath, _fileName, _targetVer): # 해당 파일과 특정 파일과의 이름 변경 및 숨김처리 변경
     os.rename(os.path.join(_filePath, _fileName), os.path.join(_filePath, "temp.FM_Ver"))
     os.rename(os.path.join(_filePath, _fileName + ".FM_Ver" + str(_targetVer)), os.path.join(_filePath, _fileName))
@@ -45,3 +47,5 @@ def changeHiddenFile(_filePath, _fileName, _targetVer): # 해당 파일과 특�
     
     win32file.SetFileAttributes(os.path.join(_filePath, _fileName + ".FM_Ver" + str(_targetVer)), 2)
     win32file.SetFileAttributes(os.path.join(_filePath, _fileName), 1)
+
+    return _filePath, _fileName, _targetVer
