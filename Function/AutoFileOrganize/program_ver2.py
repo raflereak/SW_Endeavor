@@ -2,6 +2,7 @@
 import os #파일명, 폴더명 정보를 읽어오기 위한 모듈
 import shutil #파일 이동을 위한 모듈
 import win32com.client
+from ..History import fileinfo
 import sys, io
 sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding = 'utf-8') # 아스키 코드에서 유니코드 형식으로 변경
 sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding = 'utf-8')
@@ -52,8 +53,8 @@ def moveFile(path_before, path_after, selectNumber):
                 dict[file]=temp_list[-1]
             
             path = os.path.join(path_after, temp_list[-1], (file+'.lnk'))
-            target = dirAdrs +"\\"+ file
-            #주소+이름+확장자까지 작성하여 바로가기를 만들 파일을 지정
+            target = dirAdrs +"\\"+ file #주소+이름+확장자까지 작성하여 바로가기를 만들 파일을 지정
+            csvEdit(target)
             icon = target   #사용할 아이콘을 위 경로의 파일과 같은 아이콘으로 지정. 따로 지정하고 싶을 경우 위와같이 주소를 지정해주면 됨
             shell = win32com.client.Dispatch("WScript.Shell")
             shortcut = shell.CreateShortCut(path)
@@ -69,7 +70,10 @@ def moveFile(path_before, path_after, selectNumber):
         shutil.move(path_before+"\\"+key, path_after+"\\"+value)
         cnt +=1
     return cnt
-    
+
+def csvEdit(_filepath):
+    fileinfo.dataGet(_filepath)
+
 def process(_path, _targetPath, selectNumber):
     path_before = r""+_path
     file_list = fileList(path_before)
