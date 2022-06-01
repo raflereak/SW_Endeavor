@@ -10,13 +10,15 @@ import Function.MakePackage.package as package
 import Function.FileToDoList.fileToDoList as todo
 
 from PyQt5 import QtCore, QtGui
-from PyQt5.QtWidgets import QWidget, QTableWidget, QTableWidgetItem
+from PyQt5.QtWidgets import *
 
 import Function.AutoFileOrganize.program_ver2 as organize
 import Function.VersionManager.versionManager as verManage
 import Function.Log as Log
 import Function.forManageData as md
 import Function.MakePackage.package as package
+
+from multiprocessing import Process
 
 import datetime
 
@@ -27,6 +29,7 @@ form_class1 = uic.loadUiType("GUI\\LogWindow.ui")[0]
 form_class2 = uic.loadUiType("GUI/Setting.ui")[0]
 form_class3 = uic.loadUiType("GUI/authorize.ui")[0]
 form_class4 = uic.loadUiType("GUI\\calendar.ui")[0]
+
 
 # 프로그램 메인을 담당하는 Class 선언
 class MainClass(QMainWindow, form_class):
@@ -42,6 +45,13 @@ class MainClass(QMainWindow, form_class):
         self.refreshData()
         self.refreshItemList_ForPackage()
         self.loadlist = self.loadData.get_data()
+        self.window1 = None
+        self.window2 = None
+        self.window3 = None
+        self.openCalendar()
+        self.window3.setMouseTracking(True)
+        
+    
 
     def getAddData(self):
         # for Orgazie
@@ -227,25 +237,52 @@ class AuthWindow(QDialog, form_class3):
 class CalendarWidget(QMainWindow, form_class4):
     def __init__(self) :
         QMainWindow.__init__(self)
-        self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
         # 연결한 Ui를 준비한다.
         self.initUI()
-        self.setWindowOpacity(0.7)
+        self.setWindowOpacity(0.01)
         # 화면을 보여준다.
         self.makeCalendar()
+        self.changeSizeSmall()
+        self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint|QtCore.Qt.FramelessWindowHint)
         self.show()
         self.url = ""
         self.setAcceptDrops(True)
+        self.setMouseTracking(True)
+        self.location_on_the_screen()
 
     def initUI(self):
         self.setupUi(self)
         
+    def changeSizeSmall(self):
+        self.resize(30,30)
+
+    def changeSizeBig(self):
+        self.resize(490,565)
+    
+    def activate(self):
+        self.setWindowOpacity(0.7)
+        self.changeSizeBig()
+        self.location_on_the_screen()
+
+    def setOff(self):
+        self.setWindowOpacity(0.01)
+        self.changeSizeSmall()
 
     def dragEnterEvent(self, event):
         if event.mimeData().hasUrls():
+            self.activate()
             event.accept()
         else:
             event.ignore()
+            
+
+    def mouseMoveEvent(self, event):
+        Mouse = event.globalPos()
+        print(Mouse.x())
+        if(Mouse.x() >= 3800):
+            self.activate()
+        if(Mouse.x() < 3300):
+            self.setOff()
 
     def dropEvent(self, event):
         self.tableWidget.setCurrentItem(self.tableWidget.itemAt(event.pos()))
@@ -262,7 +299,14 @@ class CalendarWidget(QMainWindow, form_class4):
         print(fileName)
         print(date)
         window.AuthAccount.makeSchedule(fileName, date)
+        self.setOff()
 
+    def location_on_the_screen(self):    
+        screen = QDesktopWidget().screenGeometry()
+        widget = self.geometry()
+        x = screen.width() - widget.width()
+        y = 0 # (screen.height() - widget.height()) / 2
+        self.move(x, y)
 
     def makeCalendar(self):
         now = datetime.datetime.today()
@@ -285,6 +329,8 @@ class CalendarWidget(QMainWindow, form_class4):
                     now += datetime.timedelta(days=1)    
         
 
+
+    
 
 if __name__ == "__main__" :
     app = QApplication(sys.argv) 

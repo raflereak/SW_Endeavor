@@ -10,6 +10,15 @@
     <height>675</height>
    </rect>
   </property>
+  <property name="mouseTracking">
+   <bool>true</bool>
+  </property>
+  <property name="tabletTracking">
+   <bool>true</bool>
+  </property>
+  <property name="acceptDrops">
+   <bool>true</bool>
+  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
@@ -319,7 +328,7 @@
      <x>0</x>
      <y>0</y>
      <width>511</width>
-     <height>43</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
