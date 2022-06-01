@@ -3,22 +3,26 @@ from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QMainWindow, QDialog, QFileDialog, QAbstractItemView
 from PyQt5.QtGui import QStandardItemModel
 from PyQt5.QtGui import QStandardItem
+from matplotlib.widgets import Widget
 
 import Function.AutoFileOrganize.program_ver2 as organize
 import Function.VersionManager.versionManager as verManage
 import Function.Log as Log
 import Function.forManageData as md
 import Function.MakePackage.package as package
-
+import Function.FileToDoList.fileToDoList as todo
 # UI파일 연결
 # UI파일 위치를 잘 적어 넣어준다.
 form_class = uic.loadUiType("GUI\\main.ui")[0]
 form_class1 = uic.loadUiType("GUI\\LogWindow.ui")[0]
+form_class2 = uic.loadUiType("GUI/Setting.ui")[0]
+form_class3 = uic.loadUiType("GUI/authorize.ui")[0]
 
 # 프로그램 메인을 담당하는 Class 선언
 class MainClass(QMainWindow, form_class):
     def __init__(self) :
         QMainWindow.__init__(self)
+        self.AuthAccount = todo.todoList()
         # 연결한 Ui를 준비한다.
         self.initUI()
         # 화면을 보여준다.
@@ -73,6 +77,15 @@ class MainClass(QMainWindow, form_class):
                        self.targetFolderPath.text(), 
                        QFileDialog.ShowDirsOnly)
         self.targetFolderPath.setText(fileName)
+        
+    def OpenExplore(self):
+        fileName = QFileDialog.getExistingDirectory(
+                       #QtWidgets.QFileDialog,                  # ???
+                       None,
+                       "Open Directory",
+                       self.targetFolderPath.text(), 
+                       QFileDialog.ShowDirsOnly)
+        self.targetFolderPath.setText(fileName)    
 
     def processOrganize(self):
         if (self.targetOrganizePath.text() != "" and self.targetFolderPath.text() != ""):
@@ -93,6 +106,9 @@ class MainClass(QMainWindow, form_class):
         self.buttonChangeVersion.clicked.connect(self.changeVer)
         self.buttonLog.clicked.connect(self.openLogWindow)
         self.buttonMakePackage.clicked.connect(self.makePackage)
+        self.buttonOpenExplorer.clicked.connect(self.OpenExplore)
+        self.buttonCancel.clicked.connect(self.cancel)
+        self.buttonSetting.clicked.connect(self.openSettingWindow)
 
     def getTargetVerFile(self):
         fileName = QFileDialog.getOpenFileName(
@@ -125,11 +141,13 @@ class MainClass(QMainWindow, form_class):
                        "Open Directory",
                        os.getcwd(), 
                        QFileDialog.ShowDirsOnly)
-        if(self.PackageName.text() == ""):
-            self.packageClass.copyAndPaste_File_noneName(self.listVersionFile.currentRow(), where)
-        else: 
-            self.packageClass.copyAndPaste_File(self.listVersionFile.currentRow(), where, self.PackageName.text())
-        self.packageClass.refreshList()
+        # if(self.PackageName.text() == ""):
+        #     self.packageClass.copyAndPaste_File_noneName(self.listVersionFile.currentRow(), where)
+        # else: 
+        #     self.packageClass.copyAndPaste_File(self.listVersionFile.currentRow(), where, self.PackageName.text())
+        # self.packageClass.refreshList()
+        if (self.PackageName.text() != "" and self.PackageName.text() != ""):
+            Log.organizeLog(organize.process(self.PackageName.text(), self.PackageName.text(), self.radioShortCut.isChecked()))
 
     def changeVer(self):
         if(self.lineSelectFilePath.text() != "" and self.buttonSelectFile.text() != ""):
@@ -138,6 +156,12 @@ class MainClass(QMainWindow, form_class):
     def openLogWindow(self):
         self.window1 = LogWindow()
 
+    def cancel(self):
+        self.exit
+        LogWindow().exit
+
+    def openSettingWindow(self):
+        self.window2 = SettingWindow()
 
 class LogWindow(QMainWindow, form_class1):
     def __init__(self) :
@@ -150,6 +174,41 @@ class LogWindow(QMainWindow, form_class1):
     def initUI(self):
         self.setupUi(self)
 
+
+class SettingWindow(QDialog, form_class2):
+    def __init__(self) :
+        QDialog.__init__(self)
+        # 연결한 Ui를 준비한다.
+        self.initUI()
+        # 화면을 보여준다.
+        self.show()
+
+    def initUI(self):
+        self.setupUi(self)
+        self.ButtonAuth.clicked.connect(self.openAuthWindow)
+
+    def openAuthWindow(self):
+        self.AuthWindow = AuthWindow()
+
+class AuthWindow(QDialog, form_class3):
+    def __init__(self):
+        QDialog.__init__(self)
+        window.AuthAccount.auth_one(scopes=['Calendars.ReadWrite'])
+        self.initUI()
+        self.show()
+
+    def initUI(self):
+        self.setupUi(self)
+        self.ButtonAuth.clicked.connect(self.processAuth)
+
+    def processAuth(self):
+        test = window.AuthAccount.auth_two(self.lineEdit.text())
+        if test:
+            self.lineEdit.setText("인증에 성공했습니다.")
+            window.window2.lineEdit.setText("인증에 성공했습니다.")
+            self.close()
+        else:
+            self.lineEdit.setText("인증에 실패하였습니다.")
 
 if __name__ == "__main__" :
     app = QApplication(sys.argv) 
