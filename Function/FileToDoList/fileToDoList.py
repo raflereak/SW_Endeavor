@@ -1,38 +1,44 @@
 from O365 import Account, calendar
 import datetime as dt
+from pytz import timezone
+import webbrowser
 
-credentials = ('eaff6f02-e564-47be-b88a-9e4088cb010f', 'Fyd8Q~N~ROFaUxYUFaFyG7z_S-Bt2_WPMDt7ra9N')
-# Fyd8Q~N~ROFaUxYUFaFyG7z_S-Bt2_WPMDt7ra9N
-# the default protocol will be Microsoft Graph
+# 시간대 설정
+KST = timezone('Asia/Seoul')
+
+# 앱 아이디 , 인증서 및 암호(값)
+credentials = ('eaff6f02-e564-47be-b88a-9e4088cb010f', 'sL78Q~AtlVSLSOB-IdnNK3hZNhXS3KL38mRB-bvI')
 
 account = Account(credentials)
-if account.authenticate(scopes=['basic', 'Calendars.ReadWrite']):
-   print('Authenticated!')
+
+
+def test(*, scopes=None, **kwargs):
+    url, state = account.con.get_authorization_url(requested_scopes= scopes,**kwargs)
+    webbrowser.open(url)
+    token_url = input("웹페이지 주소를 복사 붙여넣기 해주세요.")
+    result = account.con.request_token(token_url, **kwargs)
+    print(result)
+
+test(scopes=['Calendars.ReadWrite'])
+
+
+
+
+
+def makeSchedule(_fileName, _deadline):
+    event = calendar.new_event()
+    event.subject = _fileName
+    event.location = 'Korea'
+    event.start = KST.localize(dt.datetime.utcnow())
+    event.recurrence.set_daily(1, end=KST.localize(_deadline))
+    event.remind_before_minutes = 1440
+    event.save()
 
 
 schedule = account.schedule()
+
 calendar = schedule.get_default_calendar()
-events = calendar.get_events(include_recurring=False) 
-#events = calendar.get_events(query=q, include_recurring=True) 
 
-for event in events:
-    print(event)
-'''
+# 작동 예시
+makeSchedule("SW종합경진대회.hwp", dt.datetime(2022,6,3))
 
-q = calendar.new_query('start').greater_equal(dt.datetime(2019, 11, 20))
-q.chain('and').on_attribute('end').less_equal(dt.datetime(2019, 11, 24))
-
-def parse_event_string(event):
-    event_string = str(event)
-
-    start_index = event_string.find('from:') + 6
-    end_index = event_string.find('to:') - 1 
-    start_meeting_time = event_string[start_index:end_index]
-
-    start_obj = dt.datetime.strptime(start_meeting_time, '%H:%M:%S')
-    now = dt.datetime.strptime(now, '%H:%M:%S')
-
-    time_diff_min = ((start_obj - now).total_seconds())/60
-
-    return time_diff_min
-    '''
