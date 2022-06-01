@@ -1,21 +1,20 @@
 import os, datetime
 import pandas as pd
-import numpy as np
+import csv
 import sys, io
 sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding = 'utf-8') # 아스키 코드에서 유니코드 형식으로 변경
 sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding = 'utf-8')
 
 def dataGet(_path):
     try:
-        csv = pd.read_csv('dataset.csv', encoding='cp949')#csv파일이 있는지 확인하기 위해서 사용
+        csvfile = pd.read_csv('dataset.csv', encoding='cp949')#csv파일이 있는지 확인하기 위해서 사용
     except:
-        f = open("dataset.csv", "a", encoding='cp949')#없으면 생성 및 헤더 자동 작성
+        f = open("dataset.csv", "w", encoding='cp949')#없으면 생성 및 헤더 자동 작성
         f.write("파일명,작성시간,수정시간,확장자,용량,파일경로" + "\n")
         f.close()
 
     filename = _path#경로나 같은 폴더의 파일명으로 이용가능
 
-    csv = pd.read_csv("dataset.csv", encoding='cp949')
     # 만든시간을 타임 스탬프로 출력
     ctime = os.path.getctime(filename)#path or filename
     # 수정시간을 타임 스탬프로 출력
@@ -34,35 +33,43 @@ def dataGet(_path):
         ext = "folder"
     c = datetime.datetime.fromtimestamp(ctime)
     m = datetime.datetime.fromtimestamp(mtime)
-    strc = str(c)
+    a = datetime.datetime.fromtimestamp(atime)
+    strc = str(c) #pandas와 비교하기 위하여 str타입으로 변환
     strm = str(m)
-    
-    csvdata = csv.to_numpy()
-    rows, cols = csvdata.shape
+    stra = str(a)
+
+    f = open("dataset.csv", 'r', encoding='cp949')
+    rdr = csv.reader(f)
+    lines = []
     check = False
-    if(check == False):
-        for i in range(rows):#이동한 파일이 같은 파일인지 판별하여 csv파일에 기록할지 판별하기 위함
-            if(csvdata[i:i+1,0:1] == name):
-                if(csvdata[i:i+1,1:2] == strc):
-                    if(csvdata[i:i+1,3:4] == ext):
-                        if(csvdata[i:i+1,5:6] == filename):
-                            csvdata[i:i+1,2:3] = strm
-                            csvdata[i:i+1,4:5] = size
-                            #df = pd.DataFrame(csvdata)
-                            #df.to_csv('dataset.csv', header=False, index=False, encoding='cp949')
-                            check = True
-                            break
-                        else:
-                            pass
-                    else:
-                        pass
+    
+    for line in rdr:
+        if (line[0] == name):
+            if (line[1] == strc):
+                if(line[3] == ext):
+                    if(line[5] == filename):
+                        line[2] = stra
+                        line[4] = size
+                        check = True
+                    lines.append(line)
                 else:
-                    pass
+                    lines.append(line)
             else:
-                pass
+                lines.append(line)
+        else:
+            lines.append(line)
+    f = open('dataset.csv', 'w', newline='')
+    wr = csv.writer(f)
+    wr.writerows(lines)
+    f.close()
+
     if(check == False):
+        # f = open("dataset.csv", "w", newline='', encoding='cp949')
+        # wr = csv.writer(f)
+        # wr.writerows(lines)
+        # f.close()
         f = open("dataset.csv", "a", encoding='cp949')
-        f.write("%s,%s,%s,%s,%s,%s" % (name,c,m,ext,size,filename) + "\n")
+        f.write("%s,%s,%s,%s,%s,%s" % (name,c,a,ext,size,filename) + "\n")
         f.close()
 
 

@@ -1,5 +1,5 @@
 # Organize
-organize_Path=C:/Users/CDH/Desktop/3학년 수강/topcit
+organize_Path=C:/Users/CDH/Desktop/3학년 수강/운영체제
 targetFolder_Path=C:/Users/CDH/Desktop/새 폴더
 shortCut=True
 
