@@ -3,19 +3,23 @@ from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QMainWindow, QDialog, QFileDialog, QAbstractItemView
 from PyQt5.QtGui import QStandardItemModel
 from PyQt5.QtGui import QStandardItem
+from matplotlib.widgets import Widget
 
 import Function.AutoFileOrganize.program as organize
 import Function.VersionManager.versionManager as verManage
 import Function.Log as Log
+import Function.FileToDoList.fileToDoList as todo
 # UI파일 연결
 # UI파일 위치를 잘 적어 넣어준다.
 form_class = uic.loadUiType("GUI/main.ui")[0]
 form_class1 = uic.loadUiType("GUI/LogWindow.ui")[0]
-
+form_class2 = uic.loadUiType("GUI/Setting.ui")[0]
+form_class3 = uic.loadUiType("GUI/authorize.ui")[0]
 # 프로그램 메인을 담당하는 Class 선언
 class MainClass(QMainWindow, form_class):
     def __init__(self) :
         QMainWindow.__init__(self)
+        self.AuthAccount = todo.todoList()
         # 연결한 Ui를 준비한다.
         self.initUI()
         # 화면을 보여준다.
@@ -60,6 +64,7 @@ class MainClass(QMainWindow, form_class):
         self.buttonVersion.clicked.connect(self.verMake)
         self.buttonChangeVersion.clicked.connect(self.changeVer)
         self.buttonLog.clicked.connect(self.openLogWindow)
+        self.ButtonSetting.clicked.connect(self.openSettingWindow)
 
     def getTargetVerFile(self):
         fileName = QFileDialog.getOpenFileName(
@@ -88,6 +93,9 @@ class MainClass(QMainWindow, form_class):
     def openLogWindow(self):
         self.window1 = LogWindow()
 
+    def openSettingWindow(self):
+        self.window2 = SettingWindow()
+
 
 class LogWindow(QMainWindow, form_class1):
     def __init__(self) :
@@ -99,6 +107,37 @@ class LogWindow(QMainWindow, form_class1):
 
     def initUI(self):
         self.setupUi(self)
+
+
+class SettingWindow(QDialog, form_class2):
+    def __init__(self) :
+        QDialog.__init__(self)
+        # 연결한 Ui를 준비한다.
+        self.initUI()
+        # 화면을 보여준다.
+        self.show()
+
+    def initUI(self):
+        self.setupUi(self)
+        self.ButtonAuth.clicked.connect(self.openAuthWindow)
+
+    def openAuthWindow(self):
+        self.AuthWindow = AuthWindow()
+
+class AuthWindow(QDialog, form_class3):
+    def __init__(self):
+        QDialog.__init__(self)
+        window.AuthAccount.auth_one(scopes=['Calendars.ReadWrite'])
+        self.initUI()
+        self.show()
+
+    def initUI(self):
+        self.setupUi(self)
+        self.ButtonAuth.clicked.connect(self.processAuth)
+
+    def processAuth(self):
+        window.AuthAccount.auth_two(self.lineEdit.text())
+
 
 
 if __name__ == "__main__" :

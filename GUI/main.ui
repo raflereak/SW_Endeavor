@@ -165,6 +165,13 @@
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="ButtonSetting">
+       <property name="text">
+        <string>Setting</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="buttonCancel">
        <property name="text">
         <string>Cancel</string>
