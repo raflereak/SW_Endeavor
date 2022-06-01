@@ -29,15 +29,20 @@ class todoList:
         return result
 
     def makeSchedule(self, _fileName, _deadline): # dt.datetime(정수로 연도)
-        event = calendar.new_event()
+        event = self.calendar.new_event()
         event.subject = _fileName
         event.location = 'Korea'
-        event.start = self.KST.localize(dt.datetime.utcnow())
-        event.recurrence.set_daily(1, end=self.KST.localize(_deadline))
-        event.remind_before_minutes = 1440
+        event.start = self.KST.localize(_deadline)
+        endTime = _deadline + dt.timedelta(hours=23, minutes=59, seconds=59)
+        event.end = self.KST.localize(endTime)
         event.save()
 
-
+'''
+test = todoList()
+test.auth_one(scopes=['Calendars.ReadWrite'])
+test.auth_two(input(), scopes=['Calendars.ReadWrite'])
+test.makeSchedule("tes.txt", dt.datetime(2022,6,10))
+'''
 
 '''
 

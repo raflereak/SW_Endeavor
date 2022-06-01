@@ -1,9 +1,6 @@
 import sys, os
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QMainWindow, QDialog, QFileDialog, QAbstractItemView
-from PyQt5.QtGui import QStandardItemModel
-from PyQt5.QtGui import QStandardItem
-from matplotlib.widgets import Widget
 
 import Function.AutoFileOrganize.program_ver2 as organize
 import Function.VersionManager.versionManager as verManage
@@ -11,12 +8,25 @@ import Function.Log as Log
 import Function.forManageData as md
 import Function.MakePackage.package as package
 import Function.FileToDoList.fileToDoList as todo
+
+from PyQt5 import QtCore, QtGui
+from PyQt5.QtWidgets import QWidget, QTableWidget, QTableWidgetItem
+
+import Function.AutoFileOrganize.program_ver2 as organize
+import Function.VersionManager.versionManager as verManage
+import Function.Log as Log
+import Function.forManageData as md
+import Function.MakePackage.package as package
+
+import datetime
+
 # UI파일 연결
 # UI파일 위치를 잘 적어 넣어준다.
 form_class = uic.loadUiType("GUI\\main.ui")[0]
 form_class1 = uic.loadUiType("GUI\\LogWindow.ui")[0]
 form_class2 = uic.loadUiType("GUI/Setting.ui")[0]
 form_class3 = uic.loadUiType("GUI/authorize.ui")[0]
+form_class4 = uic.loadUiType("GUI\\calendar.ui")[0]
 
 # 프로그램 메인을 담당하는 Class 선언
 class MainClass(QMainWindow, form_class):
@@ -109,6 +119,7 @@ class MainClass(QMainWindow, form_class):
         self.buttonOpenExplorer.clicked.connect(self.OpenExplore)
         self.buttonCancel.clicked.connect(self.cancel)
         self.buttonSetting.clicked.connect(self.openSettingWindow)
+        self.buttonHistory.clicked.connect(self.openCalendar)
 
     def getTargetVerFile(self):
         fileName = QFileDialog.getOpenFileName(
@@ -163,6 +174,9 @@ class MainClass(QMainWindow, form_class):
     def openSettingWindow(self):
         self.window2 = SettingWindow()
 
+    def openCalendar(self):
+        self.window3 = CalendarWidget()
+
 class LogWindow(QMainWindow, form_class1):
     def __init__(self) :
         QMainWindow.__init__(self)
@@ -202,13 +216,75 @@ class AuthWindow(QDialog, form_class3):
         self.ButtonAuth.clicked.connect(self.processAuth)
 
     def processAuth(self):
-        test = window.AuthAccount.auth_two(self.lineEdit.text())
+        test = window.AuthAccount.auth_two(self.lineEdit.text(), scopes=['Calendars.ReadWrite'])
         if test:
             self.lineEdit.setText("인증에 성공했습니다.")
             window.window2.lineEdit.setText("인증에 성공했습니다.")
             self.close()
         else:
             self.lineEdit.setText("인증에 실패하였습니다.")
+
+class CalendarWidget(QMainWindow, form_class4):
+    def __init__(self) :
+        QMainWindow.__init__(self)
+        self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
+        # 연결한 Ui를 준비한다.
+        self.initUI()
+        self.setWindowOpacity(0.7)
+        # 화면을 보여준다.
+        self.makeCalendar()
+        self.show()
+        self.url = ""
+        self.setAcceptDrops(True)
+
+    def initUI(self):
+        self.setupUi(self)
+        
+
+    def dragEnterEvent(self, event):
+        if event.mimeData().hasUrls():
+            event.accept()
+        else:
+            event.ignore()
+
+    def dropEvent(self, event):
+        self.tableWidget.setCurrentItem(self.tableWidget.itemAt(event.pos()))
+        date = None
+        format = "%Y-%m-%d"
+        fileName = ""
+        for i in self.tableWidget.selectedItems():
+            date = "2022-" + i.text()
+        date = datetime.datetime.strptime(date, format)
+        files = [u.toLocalFile() for u in event.mimeData().urls()]
+        for f in files:
+            fileName = f.split("/")
+            fileName = fileName[len(fileName) - 1]
+        print(fileName)
+        print(date)
+        window.AuthAccount.makeSchedule(fileName, date)
+
+
+    def makeCalendar(self):
+        now = datetime.datetime.today()
+        
+        dateDict = {0: 1, 1:2, 2:3, 3:4, 4:5, 5:7, 6:0}
+        startPos = dateDict[now.weekday()]
+        for weeks in range(20):
+            for date in range(7):
+                newItem = QTableWidgetItem(str(now.strftime("%m-%d")))
+                newItem.setTextAlignment(4)
+                if(date == 6):
+                    newItem.setBackground(QtGui.QColor(56,119,214))
+                if(date == 0):
+                    newItem.setBackground(QtGui.QColor(236,75,69))
+                if(weeks == 0 and date >= startPos):
+                    self.tableWidget.setItem(weeks, date, newItem)
+                    now += datetime.timedelta(days=1)
+                elif(weeks != 0):
+                    self.tableWidget.setItem(weeks, date, newItem)
+                    now += datetime.timedelta(days=1)    
+        
+
 
 if __name__ == "__main__" :
     app = QApplication(sys.argv) 
