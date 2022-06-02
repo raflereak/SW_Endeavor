@@ -15,7 +15,7 @@ def orderByList(_data, _rootPath, _select): #_rootPath : 대상 경로 _select :
     return _data
 
 def makePath(_input):
-    return _input 
+    return _input + ":\\"
 
 def makeFileData(_loadPath):
     temp = []
