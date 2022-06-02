@@ -72,7 +72,7 @@ class MainClass(QMainWindow, form_class):
         
                 
 
-if __name__ == "__main__" :
+def st():
     app = QApplication(sys.argv) 
     window = MainClass() 
     app.exec_()
