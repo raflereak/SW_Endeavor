@@ -1,14 +1,14 @@
 # Organize
-organize_Path=C:/Users/CDH/Desktop/3학년 수강/운영체제
-targetFolder_Path=C:/Users/CDH/Desktop/새 폴더
-shortCut=True
+organize_Path=C:/Users/CDH/Desktop/3학년 수강/xptmxm
+targetFolder_Path=C:/Users/CDH/Desktop/3학년 수강/새 폴더
+shortCut=False
 
 # Version
 file=File
-file_Path=C:/Users/CDH/Desktop/새 폴더
+file_Path=C:/Users/CDH/Desktop/3학년 수강/새 폴더
 
 # Package
-base_Path=C:\Users\CDH\Desktop\pjt220527\SW_Endeavor\Package
+base_Path=C:\Users\CDH\Desktop\pjt220602\SW_Endeavor\Package
 
 # Order by List
 tabSize=

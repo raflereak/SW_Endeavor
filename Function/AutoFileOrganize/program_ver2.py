@@ -17,7 +17,7 @@ def fileList(path_before : str)->list :
 
     temp_set = set(category) #중복을 제거하기 위해 set 사용
     result = list(temp_set) #중복 제거 후 다시 리스트화
-    #print(result)
+    print(result)
     return result #결과 리턴
 
 
@@ -45,16 +45,16 @@ def moveFile(path_before, path_after, selectNumber):
             dirAdrs += path_before[i]
 
     #파일명에 대한 폴더명을 딕셔너리로 저장
-    
+    mfileList = {}
     for file in filelist:
         temp_list = file.split(".")
         if (selectNumber == True):
             if(temp_list[-1] == 'lnk'):
                 dict[file]=temp_list[-1]
-            
             path = os.path.join(path_after, temp_list[-1], (file+'.lnk'))
             target = dirAdrs +"\\"+ file #주소+이름+확장자까지 작성하여 바로가기를 만들 파일을 지정
             csvEdit(target)
+            print(target)
             icon = target   #사용할 아이콘을 위 경로의 파일과 같은 아이콘으로 지정. 따로 지정하고 싶을 경우 위와같이 주소를 지정해주면 됨
             shell = win32com.client.Dispatch("WScript.Shell")
             shortcut = shell.CreateShortCut(path)
@@ -66,10 +66,15 @@ def moveFile(path_before, path_after, selectNumber):
             dict[file]=temp_list[-1]
     #딕셔너리 정보 활용하여 파일 이동
     cnt = 0
+    
     for key, value in dict.items():
+        print(dirAdrs+"\\"+key)
+        csvEdit(dirAdrs+"\\"+key)
         shutil.move(path_before+"\\"+key, path_after+"\\"+value)
+        
         cnt +=1
     return cnt
+    
 
 def csvEdit(_filepath):
     fileinfo.dataGet(_filepath)

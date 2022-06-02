@@ -64,10 +64,6 @@ def dataGet(_path):
     f.close()
 
     if(check == False):
-        # f = open("dataset.csv", "w", newline='', encoding='cp949')
-        # wr = csv.writer(f)
-        # wr.writerows(lines)
-        # f.close()
         f = open("dataset.csv", "a", encoding='cp949')
         f.write("%s,%s,%s,%s,%s,%s" % (name,c,a,ext,size,filename) + "\n")
         f.close()
