@@ -1,0 +1,15 @@
+# Organize
+organize_Path=
+targetFolder_Path=
+shortCut=True
+
+# Version
+file=File
+file_Path=
+
+# Package
+base_Path=C:\Users\CDH\Desktop\pjt220527\SW_Endeavor\Package
+
+# Order by List
+tabSize=
+tab= 2
