@@ -5,7 +5,7 @@ dictConfig({
     'version': 1,
     'formatters': {
         'default': {
-            'format': '[%(asctime)s] %(message)s',
+            'format': '[%(asctime)s] %(module)s %(message)s',
         }
     },
     'handlers': {
@@ -40,3 +40,4 @@ def copyAndPaste_File_noneName_Log(turple): # pathPackage, pathTarget
 
 def copyAndPaste_File_Log(turple): # pathPackage, what, name, path_target
     logging.debug("[패키지 파일 옮기기 기능]을 사용하여 " + turple[0] + "의 파일을 [" + turple[1] + "] (이)라는 이름으로 " + turple[2] + "]에 옮겼습니다.")
+

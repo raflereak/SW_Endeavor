@@ -44,6 +44,7 @@ test.auth_two(input(), scopes=['Calendars.ReadWrite'])
 test.makeSchedule("tes.txt", dt.datetime(2022,6,10))
 '''
 
+
 '''
 
 # 시간대 설정

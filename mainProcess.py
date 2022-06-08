@@ -9,6 +9,7 @@ import Function.forManageData as md
 import Function.MakePackage.package as package
 import Function.FileToDoList.fileToDoList as todo
 
+
 from PyQt5 import QtCore, QtGui
 from PyQt5.QtWidgets import *
 
@@ -22,12 +23,14 @@ from multiprocessing import Process
 
 import datetime
 
+
 # UI파일 연결
 # UI파일 위치를 잘 적어 넣어준다.
 form_class = uic.loadUiType("GUI\\main.ui")[0]
 form_class1 = uic.loadUiType("GUI\\LogWindow.ui")[0]
 form_class2 = uic.loadUiType("GUI/Setting.ui")[0]
 form_class3 = uic.loadUiType("GUI/authorize.ui")[0]
+
 form_class4 = uic.loadUiType("GUI\\calendar.ui")[0]
 
 
@@ -131,6 +134,7 @@ class MainClass(QMainWindow, form_class):
         self.buttonSetting.clicked.connect(self.openSettingWindow)
         self.buttonHistory.clicked.connect(self.openCalendar)
 
+
     def getTargetVerFile(self):
         fileName = QFileDialog.getOpenFileName(
             parent=self,
@@ -187,6 +191,7 @@ class MainClass(QMainWindow, form_class):
     def openCalendar(self):
         self.window3 = CalendarWidget()
 
+
 class LogWindow(QMainWindow, form_class1):
     def __init__(self) :
         QMainWindow.__init__(self)
@@ -227,12 +232,14 @@ class AuthWindow(QDialog, form_class3):
 
     def processAuth(self):
         test = window.AuthAccount.auth_two(self.lineEdit.text(), scopes=['Calendars.ReadWrite'])
+
         if test:
             self.lineEdit.setText("인증에 성공했습니다.")
             window.window2.lineEdit.setText("인증에 성공했습니다.")
             self.close()
         else:
             self.lineEdit.setText("인증에 실패하였습니다.")
+
 
 class CalendarWidget(QMainWindow, form_class4):
     def __init__(self) :
@@ -331,7 +338,6 @@ class CalendarWidget(QMainWindow, form_class4):
 
 
     
-
 if __name__ == "__main__" :
     app = QApplication(sys.argv) 
     window = MainClass() 
