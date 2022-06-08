@@ -1,0 +1,30 @@
+# Organize
+organize_Path=
+targetFolder_Path=
+shortCut=False
+
+# Version
+file=버전 관리 파일 정하기
+file_Path=
+
+# Package
+base_Path=
+
+# Order by List
+tabSize=0
+tabList=
+
+# Profile
+name=
+birthday=
+job=
+field=
+
+# Setting
+calendarShortcutPosition=0
+checkOrganize=
+checkCalendar=
+checkSendData=
+checkOrderByOldest=
+checkVersion=
+checkPackage=
