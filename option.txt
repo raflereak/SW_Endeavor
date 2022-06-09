@@ -4,12 +4,27 @@ targetFolder_Path=
 shortCut=False
 
 # Version
-file=File
+file=
 file_Path=
 
 # Package
-base_Path=
+base_path=
 
 # Order by List
-tabSize=
-tab=
+tabSize=0
+tabList=
+
+# Profile
+name=
+birthday=
+job=
+field=
+
+# Setting
+calendarShortcutPosition=
+checkOrganize=
+checkCalendar=
+checkSendData=
+checkOrderByOldest=
+checkVersion=
+checkPackage=
