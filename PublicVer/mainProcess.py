@@ -248,10 +248,11 @@ class MainClass(QMainWindow, form_class):
                        "Open Directory",
                        os.getcwd(), 
                        QFileDialog.ShowDirsOnly)
-        if(self.PackageName.text() == ""):
-            self.packageClass.copyAndPaste_File_noneName(self.listVersionFile.currentRow(), where)
-        else: 
-            self.packageClass.copyAndPaste_File(self.listVersionFile.currentRow(), where, self.PackageName.text())
+        if(self.listPackage.currentRow()):
+            if(self.PackageName.text() == ""):
+                self.packageClass.copyAndPaste_File_noneName(self.listPackage.currentRow(), where)
+            else: 
+                self.packageClass.copyAndPaste_File(self.listPackage.currentRow(), where, self.PackageName.text())
         self.packageClass.refreshList()
 
     def changeVer(self):
@@ -263,7 +264,6 @@ class MainClass(QMainWindow, form_class):
             self.orderbyListTab.removeTab(0)
         if(self.orderbyListTab.tabText(0) == "Tab 2"):
             self.orderbyListTab.removeTab(0)
-        
         for i in range(int(self.loadData.tabSize)):
             self.TabTableList.append(QTableWidget())
             self.TabTableList[len(self.TabTableList)-1].setMaximumWidth(761)
@@ -271,6 +271,7 @@ class MainClass(QMainWindow, form_class):
             self.TabTableList[len(self.TabTableList)-1].setMaximumHeight(761)
             self.TabTableList[len(self.TabTableList)-1].setMinimumHeight(331)
             self.TabTableList[len(self.TabTableList)-1].setSelectionBehavior(QAbstractItemView.SelectRows)
+            self.TabTableList[len(self.TabTableList)-1].setSelectionMode(QAbstractItemView.SingleSelection)
             self.TabTableList[len(self.TabTableList)-1].horizontalHeader().setStretchLastSection(True)
             self.TabTableList[len(self.TabTableList)-1].insertRow(4) # for문을 써야하나? => 생성을 하기 때문에 생성 단계에서 준비해놔야함
             obo.orderByList(obo.makeFileData(self.loadData.tabList[i]), os.path.basename(self.loadData.tabList[i])+".csv", ['Date', 'Time'])
@@ -307,6 +308,7 @@ class MainClass(QMainWindow, form_class):
         self.TabTableList[len(self.TabTableList)-1].setMinimumHeight(331)
         self.TabTableList[len(self.TabTableList)-1].horizontalHeader().setStretchLastSection(True)
         self.TabTableList[len(self.TabTableList)-1].setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.TabTableList[len(self.TabTableList)-1].setSelectionMode(QAbstractItemView.SingleSelection)
         where = QFileDialog.getExistingDirectory(
                        #QtWidgets.QFileDialog,                  # ???
                        None,
@@ -315,18 +317,26 @@ class MainClass(QMainWindow, form_class):
                        QFileDialog.ShowDirsOnly)
         if (where):
             obo.orderByList(obo.makeFileData(where), os.path.basename(where)+".csv", ['Date', 'Time'])
-            self.TabTableList[len(self.TabTableList)-1] = self.readCSV(os.path.basename(self.loadData.tabList[len(self.TabTableList)-1])+".csv", self.TabTableList[len(self.TabTableList)-1])
+            self.TabTableList[len(self.TabTableList)-1] = self.readCSV(os.path.basename(where)+".csv", self.TabTableList[len(self.TabTableList)-1])
             self.orderbyListTab.addTab(self.TabTableList[len(self.TabTableList)-1], where)
         
     def selectItemDelete_OBO(self):
-        obo.removeSelect(self.TabTableList[self.orderbyListTab.currentIndex()].selectedItems()[1].text())
-        self.TabTableList[self.orderbyListTab.currentIndex()].removeRow(self.TabTableList[self.orderbyListTab.currentIndex()].currentRow())
+        print(self.TabTableList[self.orderbyListTab.currentIndex()].selectedItems()[1].text())
+        if(len(self.TabTableList[self.orderbyListTab.currentIndex()].selectedItems()) != 0 and self.TabTableList[self.orderbyListTab.currentIndex()].selectedItems()[1].text() != "Path"):
+            obo.removeSelect(self.TabTableList[self.orderbyListTab.currentIndex()].selectedItems()[1].text())
+            self.TabTableList[self.orderbyListTab.currentIndex()].removeRow(self.TabTableList[self.orderbyListTab.currentIndex()].currentRow())
 
     def selectItemOpen_OBO(self):
-        obo.openDirSelect(os.path.dirname(self.TabTableList[self.orderbyListTab.currentIndex()].selectedItems()[1].text()))
+        if(len(self.TabTableList) != 0):
+            obo.openDirSelect(os.path.dirname(self.TabTableList[self.orderbyListTab.currentIndex()].selectedItems()[1].text()) + ".csv")
         
     def tabDelete(self):
-        self.orderbyListTab.removeTab(self.orderbyListTab.currentIndex())
+        if(self.orderbyListTab.currentIndex() != -1):
+            try:
+                os.remove(os.path.join(os.getcwd(), os.path.basename(self.orderbyListTab.tabText(self.orderbyListTab.currentIndex()) + ".csv")))
+            except:
+                print("can't")
+            self.orderbyListTab.removeTab(self.orderbyListTab.currentIndex())
 
     def openLogWindow(self):
         self.window1 = LogWindow()
@@ -514,7 +524,7 @@ class CalendarWidget(QMainWindow, form_class4):
     
     def dragLeaveEvent(self, event):
         self.setDisabledState()
-
+    '''
     def mouseMoveEvent(self, event):
         screen = QDesktopWidget().screenGeometry()
         Mouse = event.globalPos()
@@ -522,7 +532,7 @@ class CalendarWidget(QMainWindow, form_class4):
             self.setActiveState()
         if(Mouse.x() < screen.width() - 5):
             self.setDisabledState()
-
+    '''
     def dropEvent(self, event):
         self.tableWidget.setCurrentItem(self.tableWidget.itemAt(event.pos()))
         date = None

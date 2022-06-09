@@ -4,11 +4,11 @@ targetFolder_Path=
 shortCut=False
 
 # Version
-file=버전 관리 파일 정하기
+file=
 file_Path=
 
 # Package
-base_Path=
+base_path=
 
 # Order by List
 tabSize=0
@@ -21,7 +21,7 @@ job=
 field=
 
 # Setting
-calendarShortcutPosition=0
+calendarShortcutPosition=
 checkOrganize=
 checkCalendar=
 checkSendData=

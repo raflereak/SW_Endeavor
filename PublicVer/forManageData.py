@@ -121,7 +121,8 @@ class manageData: # 최초로 불러 올 때 모든 데이터를 받아옵니다
         saveData.write("tabList=" + temp)
 
         saveData.write("\n")
-
+        saveData.write("\n")
+        
         saveData.write("# Profile\n")
         saveData.write("name=" + self.name + "\n")
         saveData.write("birthday=" + self.birthday + "\n")

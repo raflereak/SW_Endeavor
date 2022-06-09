@@ -48,19 +48,6 @@
         <attribute name="title">
          <string>Tab 1</string>
         </attribute>
-        <widget class="QTableWidget" name="tableWidget">
-         <property name="geometry">
-          <rect>
-           <x>240</x>
-           <y>80</y>
-           <width>256</width>
-           <height>192</height>
-          </rect>
-         </property>
-         <attribute name="horizontalHeaderStretchLastSection">
-          <bool>false</bool>
-         </attribute>
-        </widget>
        </widget>
        <widget class="QWidget" name="drive_2">
         <attribute name="title">

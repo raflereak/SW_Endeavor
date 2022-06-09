@@ -32,10 +32,16 @@ def makeFileData(_loadPath):
 # orderByList(makeFileData(LoadPath), LoadPath + ".csv", ['Date', 'Time'])
 
 def removeSelect(target):
-    os.remove(target)
+    try:
+        os.remove(target)
+    except:
+        print("can't")
 
 def openDirSelect(target):
-    os.startfile(target)
+    try:
+        os.startfile(target)
+    except:
+        print("can't")
 
 def orderByList(_data, _rootPath, _select): #_rootPath : 대상 경로 _select : 정렬 방식(칼럼 내용) ex> ['Date', 'Time']
     _data = _data.sort_values(by=_select)
